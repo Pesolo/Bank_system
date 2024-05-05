@@ -8,12 +8,12 @@ import os
 def unique_id():
     data = pandas.read_csv("data.csv")
     while True:
-        id = random.randint(1, 5)
+        id = random.randint(1, 10)
         for index in data.index:
             if data["id"][index] != str(id):
                 return id
             else:
-                id = random.randint(1, 5)
+                id = random.randint(1, 10)
 
 def profile_create():
     name = input("Enter your name: ")
@@ -21,7 +21,7 @@ def profile_create():
     try:
         id = unique_id()
         print(f"Your banking Id is {id}")
-        client = Bank(id, name, age)
+        Bank.create(id, name, age)
         with open(f"{str(id)}.txt", "w", newline="") as file:
             file.write("Transaction history")
 
@@ -36,7 +36,7 @@ def profile_create():
         customers_data = pandas.DataFrame(bank_details)
         customers_data.to_csv("data.csv", index=False)
 
-        client = Bank("1", name, age)
+        Bank.create("1", name, age)
         print("Your Banking ID is 1")
         with open("1.txt", "w", newline="") as file:
             file.write("Transaction history")

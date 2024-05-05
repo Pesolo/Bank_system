@@ -4,14 +4,14 @@ import os
 
 class Bank:
 
-
-    def __init__(self, id, name, dob):
-        self.file = "data.csv"
-        self.id = id
-        self.name = name
-        self.age = dob
-        new_data = [self.id, self.name, self.age, "0.00"]
-        with open(self.file, "a", newline="") as dfile:
+    @staticmethod
+    def create(id, name, dob):
+        file = "data.csv"
+        id = id
+        name = name
+        age = dob
+        new_data = [id, name, age, "0.00"]
+        with open(file, "a", newline="") as dfile:
             writer = csv.writer(dfile)
             writer.writerow(new_data)
 
