@@ -7,13 +7,19 @@ import os
 
 def unique_id():
     data = pandas.read_csv("data.csv")
-    while True:
-        id = random.randint(1, 10)
-        for index in data.index:
-            if data["id"][index] != str(id):
-                return id
-            else:
-                id = random.randint(1, 10)
+    ids = [x for x in data["id"]]
+    id = 1 if len(ids) < 1 else max(ids) + 1
+    return id
+    # while True:
+    #     id = random.randint(1, 10)
+    #     if str(id).strip() not in ids:
+    #         return id
+
+    # for index in data.index:
+    #     if data["id"][index] != str(id):
+    #         return id
+    #     else:
+    #         id = random.randint(1, 10)
 
 def profile_create():
     name = input("Enter your name: ")
@@ -27,16 +33,14 @@ def profile_create():
 
     except FileNotFoundError:
         bank_details = {
-            'id': ["0"],
-            'names': ["0"],
-            'DOB': ["0"],
+            'id': ["1"],
+            'names': [name],
+            'DOB': [age],
             'balance': ["0.00"]
         }
 
         customers_data = pandas.DataFrame(bank_details)
         customers_data.to_csv("data.csv", index=False)
-
-        Bank.create("1", name, age)
         print("Your Banking ID is 1")
         with open("1.txt", "w", newline="") as file:
             file.write("Transaction history")
@@ -107,7 +111,7 @@ def open_page():
         return "2"
     else:
         print("Wrong Selection")
-        open()
+        open_page()
 
 
 def banking_oper():
