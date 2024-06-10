@@ -53,6 +53,8 @@ class Bank:
                     if curr_value > float(amount):
                         new_bal = curr_value - float(amount)
                         row["balance"] = "{:.2f}".format(new_bal)
+                        with open(f"{id_}.txt", mode="a") as file:
+                            file.write(f"\n #{amount}, withdraw")
                         print(f"#{amount}, successfully withdrawn")
                     else:
                         print("Insufficient balance")
@@ -82,6 +84,8 @@ class Bank:
                     if curr_value > float(amount):
                         new_bal = curr_value - float(amount)
                         row["balance"] = "{:.2f}".format(new_bal)
+                        with open(f"{id_}.txt", mode="a") as file:
+                            file.write(f"\n #{amount}, transferred to Banking id{user} ")
                     else:
                         print("Insufficient balance")
                         return
@@ -89,6 +93,8 @@ class Bank:
                     curr_value = float(row["balance"])
                     new_bal = curr_value + float(amount)
                     row["balance"] = "{:.2f}".format(new_bal)
+                    with open(f"{user}.txt", mode="a") as file:
+                        file.write(f"\n #{amount}, recieved from Banking id{id_} ")
                 lst.append(row)
 
         # update data

@@ -70,8 +70,6 @@ def mak_withdraw():
     # Check if the file exists
     if os.path.exists(file_path):
         Bank.withdraw(id_=user, amount=mon_wit)
-        with open(f"{user}.txt", mode="a") as file:
-            file.write(f"\n #{mon_wit}, withdraw")
 
     else:
         print(f"The banking id {user} does not exist.")
@@ -92,15 +90,16 @@ def transfer_funds():
 
     send_path = f"{user}.txt"
     rec_path = f"{benef}.txt"
-    if os.path.exists(send_path) and os.path.exists(rec_path):
-        Bank.transfer(user, money, benef)
-        with open(send_path, mode="a") as file:
-            file.write(f"\n #{money}, transfer to Banking id{benef} ")
 
-        with open(rec_path, mode="a") as file:
-            file.write(f"\n #{money}, recieved from Banking id{user} ")
-    else:
-        print(f"Invalid banking id inputted")
+    if not os.path.exists(send_path):
+        print("Your banking id is invalid")
+        return
+
+    if not os.path.exists(rec_path):
+        print("Reciever banking id is invalid")
+        return
+
+    Bank.transfer(user, money, benef)
 
 
 def open_page():
@@ -134,7 +133,7 @@ def banking_oper():
         return "7"
     else:
         print("Wrong Selection")
-        banking_oper()
+        return banking_oper()
 
 def transact_hist():
     user = input("Input your Banking Id: ")
@@ -175,7 +174,7 @@ while banking:
         transact_hist()
     elif choice == "6":
         acct_del()
-    else:
+    elif choice == "7":
         print("Thank You for banking with us")
         banking = False
 
